@@ -36,7 +36,6 @@ public class LoginManager {
 			case ADMINISTRATOR:
 				client = context.getBean(AdminService.class);
 				if (client.login(email, password)) {
-					System.out.println(">>>> Admin is logged");
 					return client;
 				} else {
 					throw new LoginManagerException("LoginManager Error: admin authentication failed, invalid username or password");
@@ -44,7 +43,6 @@ public class LoginManager {
 			case COMPANY:
 				client = context.getBean(CompanyService.class);
 				if (client.login(email, password)) {
-					System.out.println(">>>> Company is logged");
 					return client;
 				} else {
 					throw new LoginManagerException("LoginManager Error: company authentication failed, invalid username or password");
@@ -52,7 +50,6 @@ public class LoginManager {
 			case CUSTOMER:
 				client = context.getBean(CustomerService.class);
 				if (client.login(email, password)) {
-					System.out.println(">>>> Customer is logged");
 					return client;
 				} else {
 					throw new LoginManagerException("LoginManager Error: customer authentication failed, invalid username or password");

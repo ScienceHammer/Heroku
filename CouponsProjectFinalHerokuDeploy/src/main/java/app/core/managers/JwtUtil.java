@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.annotation.PostConstruct;
 import javax.crypto.spec.SecretKeySpec;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -24,10 +25,15 @@ import io.jsonwebtoken.SignatureAlgorithm;
 public class JwtUtil {
 
 	private String signatureAlgorithm = SignatureAlgorithm.HS256.getJcaName();
-	@Value("${jwt.token.util.secret}")
-	private String encodedSecretKey = "this+is+my+key+and+it+must+be+at+least+256+bits+long";
-	private Key decodedSecretKey = new SecretKeySpec(Base64.getDecoder().decode(encodedSecretKey),
-			this.signatureAlgorithm);
+	@Value("${jwt.token.util.secret: this+is+my+key+and+it+must+be+at+least+256+bits+long}")
+	private String encodedSecretKey ;
+	private Key decodedSecretKey;
+	
+	@PostConstruct
+	private void init() {
+		decodedSecretKey = new SecretKeySpec(Base64.getDecoder().decode(encodedSecretKey),
+				this.signatureAlgorithm);
+	}
 
 	public String generateToken(UserDetails userDetails) {
 		Map<String, Object> claims = new HashMap<>();
@@ -91,5 +97,6 @@ public class JwtUtil {
 		final String username = extractUserEmail(token);
 		return (username.equals(email) && !isTokenExpired(token));
 	}
+
 
 }

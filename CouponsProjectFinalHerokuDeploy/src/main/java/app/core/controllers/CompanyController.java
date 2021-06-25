@@ -51,9 +51,10 @@ public class CompanyController {
 	}
 
 	@DeleteMapping("/deleteCoupon")
-	public Coupon deleteCoupon(@RequestHeader String token, @RequestParam int couponId) {
+	public String deleteCoupon(@RequestHeader String token, @RequestParam int couponId) {
 		try {
-			return ((CompanyService) httpServletRequest.getAttribute("service")).deleteCoupon(couponId);
+			((CompanyService) httpServletRequest.getAttribute("service")).deleteCoupon(couponId);
+			return "Coupon with id " + couponId + ", is deleted";
 		} catch (CouponsSystemException e) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
 		}
@@ -74,21 +75,6 @@ public class CompanyController {
 
 	}
 
-//	@GetMapping("/getAllCompanyCoupons")
-//	public List<Coupon> getAllCompanyCoupons(@RequestHeader String token) {
-//		return ((CompanyService) httpServletRequest.getAttribute("service")).getCompanyCoupons();
-//	}
-//
-//	@GetMapping("/getAllCompanyCouponsByCategory")
-//	public List<Coupon> getAllCompanyCouponsByCategory(@RequestHeader String token, @RequestParam Category category) {
-//		return ((CompanyService) httpServletRequest.getAttribute("service")).getCompanyCoupons(category);
-//	}
-//
-//	@GetMapping("/getAllCompanyCouponsByMaxPrice")
-//	public List<Coupon> getAllCompanyCouponsByMaxPrice(@RequestHeader String token, @RequestParam double maxPrice) {
-//		return ((CompanyService) httpServletRequest.getAttribute("service")).getCompanyCoupons(maxPrice);
-//	}
-//	
 	@GetMapping("/getAllCompanyCoupons")
 	public List<Coupon> getAllCompanyCoupons(@RequestHeader String token,
 			@RequestParam(required = false) Category category, @RequestParam(required = false) Double maxPrice) {

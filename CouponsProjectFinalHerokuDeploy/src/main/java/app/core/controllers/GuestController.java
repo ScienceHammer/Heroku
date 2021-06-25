@@ -24,10 +24,8 @@ public class GuestController {
 	@GetMapping("/getTop10Coupons")
 	public List<Coupon> getCoupons(@RequestParam(required = false) Category category) {
 		if (category != null) {
-			System.out.println(">>> top10 with category");
 			return guestService.getTop10ByCustomers(category); 
 		} else {	
-			System.out.println(">>> top10 without category");
 			return guestService.getTop10ByCustomers(); 
 		}
 	}

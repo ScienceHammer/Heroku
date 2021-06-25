@@ -15,7 +15,6 @@ import org.springframework.http.HttpStatus;
 
 import app.core.entities.Company;
 import app.core.entities.Customer;
-import app.core.exceptions.CouponsSystemException;
 import app.core.login.ClientType;
 import app.core.login.LoginManager;
 import app.core.managers.JwtUtil;
@@ -43,10 +42,8 @@ public class LoginFilter implements Filter {
 		HttpServletResponse resp = (HttpServletResponse) response;
 		String requestTokenHeader = req.getHeader("token");
 		String url = req.getRequestURI();
-		System.out.println("Hello from filter url: " + requestTokenHeader);
 		if (requestTokenHeader != null && requestTokenHeader.startsWith("Bearer ")) {
 			String jwtToken = requestTokenHeader.substring(7);
-			System.out.println("Hello from Token: " + jwtToken);
 			
 			try {
 				ClientType clientType = tokenUtil.extractUserType(jwtToken);
@@ -109,7 +106,7 @@ public class LoginFilter implements Filter {
 					break;
 				}
 
-			} catch (CouponsSystemException e) {
+			} catch (Exception e) {
 				resp.sendError(HttpStatus.UNAUTHORIZED.value(), "Unvalid Credentials");
 			} 
 		} else {

@@ -290,8 +290,4 @@ public class AdminService extends ClientService {
 		return email;
 	}
 
-	public String getPassword() {
-		return password;
-	}
-
 }
